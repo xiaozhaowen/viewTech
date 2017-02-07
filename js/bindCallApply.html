@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //----------------------------------call--------------------------------------
+
+        /**
+         *
+         *
+         *
+         * @param thisObj 作为函数的执行上下文
+         * @param arg1 参数1
+         * @param arg2 参数2
+         * ...
+         * call(thisObj,arg1,arg2,...)
+         *
+         *
+         *
+         *  thisObj如果不传值，或者为null,undefined则会默认修改为Window
+         *  传递一个其他的函数名称，则为其他函数的引用
+         *  传递字符串，数字，布尔等基础类型会转变包装类型
+         *  传递一个对象，则为这个对象
+         * */
+
+        function foo() {
+            console.log(this);
+        }
+        function abc() {
+
+        }
+        var obj = {
+            name: '科比'
+        };
+        foo.call();//Window
+        foo.call(null);//Window
+        foo.call(undefined);//Window
+        foo.call(1);//Number
+        foo.call('Hello');//String
+        foo.call(true);//Boolean
+        foo.call(abc);//function abc(){}
+        foo.call(obj);//{name:'科比'}
+
+
+        // ******************* 实现继承 *******************
+        function Father(name) {
+            this.name = name;
+            this.greeting = function () {
+                console.log('Hi，I am ' + this.name);
+            };
+        }
+        function Son(name) {
+            //this的值为Son,这样在Father函数内部的this值为Son
+            //可以利用这种方式来实现继承
+            Father.call(this, name);
+        }
+
+        var father = new Father('父亲');
+        father.greeting();
+
+        var son = new Son('儿子');
+        son.greeting();
+
+
+        //----------------------------------apply--------------------------------------
+        /**
+         * @param thisObj 作为函数的执行上下文
+         * @param arg1 参数1
+         * @param arg2 参数2
+         * ...
+         * apply(thisObj,[arg1,arg2,...])
+         *
+         *
+         * 作用和call方法完全一样，只是传递参数的方式不一样。
+         * 适用于函数参数不能确定的情况下，使用一个数组把参数传递过去
+         * */
+        //----------------------------------bind--------------------------------------
+
+        /**
+         *  bind方法为新增ES6的方法需要IE9+
+         *   bind()方法会创建一个新函数。
+         *   当这个新函数被调用时，bind()的第一个参数将作为它运行时的 this, 之后的一序列参数将会在传递的实参前传入作为它的参数。
+         *
+         *
+         *  */
+        var bar = function () {
+           console.log(this.x);
+        }
+
+        var myObj ={
+            x:3
+        };
+
+        bar();//undefined
+        var newFunc = bar.bind(myObj);
+        newFunc();//3
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

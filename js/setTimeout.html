@@ -4,19 +4,61 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
-        function main() {
-            console.log('A');
-            setTimeout(function () {
-                console.log('B');
-            },0);
-            console.log('C');
-            console.log('C1');
-            console.log('C2');
-            console.log('C3');
-            console.log('C4');
-            console.log('C5');
+
+        //----------------------------------插入待执行队列--------------------------------------
+        /**
+         *  最后 ，我们可以总结出:
+         *  setTimeout只能保证在指定的时间后将任务(需要执行的函数)插入任务队列中等候，
+         *  但是不保证这个任务在什么时候执行。
+         *  一旦执行javascript的线程空闲出来，自行从队列中取出任务然后执行它。
+         *
+         *  */
+        var start = new Date();
+
+        setTimeout(function () {
+
+            console.log(new Date() - start);
+
+        }, 500);
+
+        while (new Date() - start <= 1000) {
         }
-        main();
+
+        //----------------------------------this--------------------------------------
+        var a = 1;
+        var obj = {
+            a: 2,
+            test: function () {
+                setTimeout(function () {
+                    console.info('setTimeout中的this');
+                    console.log(this.a);
+                }, 0);
+            },
+            testBind:function () {
+                setTimeout(function () {
+                    console.info('setTimeout中的this 连接 bind');
+                    console.log(this.a);
+                }.bind(this),0);
+            }
+        };
+        obj.test();  //  1
+        obj.testBind();  // 2
+
+        //----------------------------------客户端调用--------------------------------------
+        /**
+         *
+         *  setTimeout可以传入第三个参数、第四个参数….，它们表示神马呢？
+         *  其实是用来表示第一个参数（回调函数）传入的参数。
+         *
+         *  */
+        function multiArgs() {
+            setTimeout(function (a, b) {
+                console.log(a);
+                console.log(b);
+            }, 2000, 'Hello', 100);//Hello对应参数a,100对应参数b
+        }
+
+        multiArgs();
     </script>
 </head>
 <body>
