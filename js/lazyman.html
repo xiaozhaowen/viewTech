@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /**
+         * 构造函数的声明
+         * 构造函数原型上添加实例方法
+         * setTimeout的理解,即便是延迟为0，也会在同步代码执行完毕之后才执行
+         * 数组的尾部插入，头部弹出
+         * 函数也可以存入到数组中，并且可以取出任意一个调用
+         * this的理解，setTimeout中的this为window对象；链式调用
+         * 闭包的理解，参数在闭包中引用后，在内存中不会释放
+         *
+         * */
+        function _lazyMan(name) {
+            this.tasks = [];
+            var self = this;
+            var fn = (function (n) {
+                var name = n;
+                return function () {
+                    console.log('Hi!This is ' + name + '!');
+                    self.next();
+                };
+            }(name));
+            this.tasks.push(fn);
+            setTimeout(function () {
+
+                self.next();
+            }, 0);
+            console.log('***** 构造函数执行完毕');
+        }
+
+        _lazyMan.prototype.next = function () {
+            var fn = this.tasks.shift();
+            fn && fn();
+        };
+
+        _lazyMan.prototype.eat = function (mealName) {
+            var self = this;
+            var fn = (function (mealName) {
+                return function () {
+                    console.log('Eat ' + mealName + '~');
+                    self.next();
+                };
+            }(mealName));
+            this.tasks.push(fn);
+            console.log('***** eat执行完毕');
+            return this;
+
+        };
+
+        _lazyMan.prototype.sleep = function (delay) {
+            var self = this;
+            var fn = (function (delay) {
+                return function () {
+                    setTimeout(function () {
+                        console.log('Wake up after ' + delay);
+                        self.next();
+                    }, delay * 1000);
+                };
+            }(delay));
+            this.tasks.push(fn);
+            console.log('***** sleep执行完毕');
+            return this;
+        };
+
+        _lazyMan.prototype.sleepFirst = function (delay) {
+            var self = this;
+            var fn = (function (delay) {
+                setTimeout(function () {
+                    console.log('Wake up after ' + delay);
+                    self.next();
+                }, delay * 1000);
+            }(delay));
+            this.tasks.unshift(fn);
+            console.log('***** sleepFirst 执行完毕');
+            return this;
+        };
+
+        function LazyMan(name) {
+            return new _lazyMan(name);
+        }
+
+
+
+
+        //----------------------------------客户端调用--------------------------------------
+
+        //        LazyMan('Hank');
+        //        LazyMan('Hank').eat('Dinner');
+                LazyMan('Hank').sleep(5).eat('Dinner');
+//        LazyMan('Hank').eat('supper').eat('dinner');
+//        LazyMan('Hank').sleepFirst(5).eat('supper');
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
