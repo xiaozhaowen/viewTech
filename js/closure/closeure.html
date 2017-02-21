@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //------------------------------------------1 ) -----------------------------------------------------
+    //全局上下文环境
+    function fn() {                  //fn上下文环境
+        var max =10;
+        return function bar(x) {     //bar上下文环境
+            if(x>max){
+                console.log(x);
+            }
+        }
+    }
+
+    var f1 = fn(),
+        max =100;
+    f1(15);
+
+
+
+    //------------------------------------------2 ) 依次输入1，2，3，4，5-----------------------------------------------------
+    for (var i=1; i<=5; i++) {
+        var func = (function (num) {
+            return function () {
+                console.log(num);
+            };
+        })(i);
+        setTimeout(func, i*1000 );
+    }
+
+
+</script>
+</body>
+</html>

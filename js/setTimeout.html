@@ -5,6 +5,12 @@
     <title>Title</title>
     <script>
 
+        /**
+         *
+         * 这也是为何setTimeout的定时器值推荐最小使用16.7ms的原因（16.7 = 1000 / 60, 即每秒60帧）
+         *
+         */
+
         //----------------------------------插入待执行队列--------------------------------------
         /**
          *  最后 ，我们可以总结出:
@@ -34,11 +40,11 @@
                     console.log(this.a);
                 }, 0);
             },
-            testBind:function () {
+            testBind: function () {
                 setTimeout(function () {
                     console.info('setTimeout中的this 连接 bind');
                     console.log(this.a);
-                }.bind(this),0);
+                }.bind(this), 0);
             }
         };
         obj.test();  //  1

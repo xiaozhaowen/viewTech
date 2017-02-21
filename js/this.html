@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
+        function Person() {
+            this.name ="Kobe";
+            this.sayHello = function() {
+                console.log(this.name);
+            }
+        }
+        Person.prototype.walk= function () {
+          console.log(this.name +' is walking');
+        };
 
+
+
+
+        var kobe = new Person();
+        kobe.sayHello();
+        kobe.walk();
     </script>
 </head>
 <body>
