@@ -56,6 +56,24 @@
 
     }
 
+
+
+    //-----------------Function和Object的关系---------------------
+    var F = function(){};
+    Object.prototype.a = function(){
+        console.log('a 方法来自 Object原型');
+    };
+    Function.prototype.b = function(){
+        console.log('b 方法来自 Function');
+    };
+    var f = new F();
+
+    f.a();
+
+    F.b();
+
+
+
 </script>
 </body>
 </html>

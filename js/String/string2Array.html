@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串转为字符数组</title>
+</head>
+<body>
+<script>
+    /**
+     * 1) 给定一个字符串，返回如下的输出，例如：
+     * hello 结果为 h-e-l-l-o
+     *
+     *  要求调用方式为：
+     *  1） build(str)
+     *  2)str.build()
+     *
+     */
+    var name = 'hello';
+    function build(str) {
+        var result = str.split('').join('-');
+        return result;
+    }
+    if (!String.prototype.build) {
+        String.prototype.build = function () {
+            return this.split('').join('-');
+        };
+    }
+
+    console.log(build(name));
+    var test = name.build();
+    console.log(test);
+
+
+    /**
+     * 2) 扩展String，添加一个repeatify函数
+     * 方法接收一个整数参数，比如：
+     * var str ='ABC';
+     * str.repeatify(3);
+     *
+     * 结果为:ABCABCABC
+     *
+     *
+     * 这个方法ES6已经有了，是String.prototype.repeat
+     * 并且可以在MDN上找到这个方法的polyfill实现
+     *
+     * 方法的核心其实就是循环拼接字符串
+     *
+     * var result ='';
+     * for(var i=0;i<count;i++){
+         *      result+=this;
+         * }
+     *
+     *  这里做一个非常严谨的类库级别的实现
+     *
+     */
+    (function () {
+        if (!String.prototype.repeatify)
+            String.prototype.repeatify = function (count) {
+                'use strict';
+                if(this ==null){
+                    throw new TypeError('不能转换'+this+'为一个对象');
+                }
+
+                var str =''+this;
+                count = +count;
+                if(count!=count){
+                    count =0;
+                }
+                if(count<0){
+                    throw new RangeError('参数不可为负数');
+                }
+
+                if(count ==Infinity){
+                    throw new RangeError('参数不可为无穷大');
+                }
+
+                count = Math.floor(count);
+
+                if(str.length ==0 || count ==0){
+                    return '';
+                }
+
+                if(str.length * count >=1<<28){
+                    throw new RangeError('重复次数不能溢出字符串最大size');
+                }
+
+                var rpt='';
+                for(;;){
+                    if((count&1)==1){
+                        rpt +=str;
+                    }
+                    count>>>=1;
+                    if(count==0){
+                        break;
+                    }
+                    str +=str;
+                }
+                return rpt;
+            };
+    }());
+
+    //测试代码
+    var tester ='HELLO';
+    console.log(tester.repeatify(3));
+
+
+</script>
+</body>
+</html>

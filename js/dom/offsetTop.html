@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取元素距离顶部的距离</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<div style="height: 100px;background-color: rebeccapurple"></div>
+
+<button id="btnTest">获取距离顶部的高度</button>
+
+<script>
+    var btnTest  =  document.getElementById('btnTest');
+
+    btnTest.onclick = function () {
+        var topDistance = btnTest.offsetTop;
+        console.log(topDistance);
+    };
+
+</script>
+
+</body>
+</html>

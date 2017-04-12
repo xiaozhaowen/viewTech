@@ -1,0 +1,51 @@
+1.从一个给定的字符串数组中快速查找到一个字符串，例如：
+
+['alipay','baidu','uc,'tencent']中查找 uc
+
+2. 说出下面的输出
+
+
+(function () {
+    var a=b=10;
+}());
+
+console.log(b);
+
+3. 说出下面的输出
+Array.prototype.min = function () {
+    var min = this[0];
+    for(var i=0;i<this.length;i++){
+        if(this[i]<min){
+            min = this[i];
+        }
+    }
+    return min;
+};
+
+var arr =[10,5,5,30];
+var total =0;
+for(var i in arr){
+    if(arr.hasOwnProperty(i)){
+        var x = parseInt(arr[i],10);
+        total += parseInt(arr[i],10);
+    }
+}
+
+console.log(total);
+
+4.  document.createDocumentFragment 和 innerHTML 2种哪个更快
+
+5.xss 应对策略
+
+6.HTML5 与 Css3
+
+7.常用优化手段
+
+8.如何不用闭包，闭包尽量减少使用.node的fs 模块，readFile
+
+9.http2.0 与http1.0的区别
+
+10. 使用正则实现trim
+
+
+

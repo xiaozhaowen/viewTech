@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常用方法</title>
+</head>
+<body>
+<script>
+    //字符串得到对应的ASC码
+
+    (function () {
+        var name = 'ABC';
+        var mapMethod = Array.prototype.map;
+        var result = mapMethod.call(name, function (item, index, arr) {
+            console.log(item);
+            return item.charCodeAt(0);
+        });
+
+        console.log(result);
+        console.log(name);
+    }());
+
+
+    //数组拷贝
+    (function () {
+        var base =[1,2,3];
+        var copy1 = base.map(function (x) {
+            return x;
+        });
+        copy1.push(4);
+        console.log(base);
+        console.log(copy1);
+
+
+        var copy2 = base.slice();
+
+        copy2.push(100);
+        console.log(base);
+        console.log(copy2);
+
+    }());
+
+</script>
+</body>
+</html>

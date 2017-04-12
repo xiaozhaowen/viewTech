@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this基础</title>
+</head>
+<body>
+    <script>
+        /**
+         * 1）对象的某个属性为一个子对象
+         */
+        
+        var fullName ='window_name';
+        var obj ={
+            fullName:'father_name',
+            son:{
+                getFullName:function () {
+                    return this.fullName;
+                }
+            }
+        };
+
+        console.log(obj.son.getFullName());//最直接的调用
+
+        var functionRef = obj.son.getFullName;//获取到方法的引用，然后单独调用
+        console.log(functionRef());
+
+
+        /**
+         * 2) 对象自身的方法1调用自身的方法2
+         */
+
+        var name ='window';
+        var Tom ={
+            name:'Tom',
+            show:function () {
+                console.log(this.name);
+            },
+            wait:function () {
+                var fun = this.show;
+                fun();
+            }
+        };
+        Tom.wait();
+
+
+
+
+
+
+    </script>
+</body>
+</html>

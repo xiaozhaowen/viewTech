@@ -20,6 +20,17 @@
         var kobe = new Person();
         kobe.sayHello();
         kobe.walk();
+
+
+
+        //-------------严格模式下的全局this-------------
+
+        (function () {
+            'use strict';
+
+            console.log('严格模式，全局执行环境下');
+            console.log(this);
+        }());
     </script>
 </head>
 <body>

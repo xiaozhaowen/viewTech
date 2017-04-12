@@ -2,15 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>测试H5日志输出到Xcode</title>
 </head>
 <body>
 
 
-<button id="btnRun">Run</button>
+<button id="log">log</button>
+<button id="info">info</button>
+<button id="warn">warn</button>
+<button id="error">error</button>
 
 <script>
+    function  init() {
+        console.log('H5页面启动');
+    }
 
+    init();
+
+    document.getElementById('log').onclick=function () {
+        console.log('H5  log 方法');
+    };
+    document.getElementById('info').onclick=function () {
+        console.log('H5  info 方法');
+    };
+    document.getElementById('warn').onclick=function () {
+        console.log('H5  warn 方法');
+    };
+    document.getElementById('error').onclick=function () {
+        console.log('H5  error 方法');
+    };
 </script>
 </body>
 </html>

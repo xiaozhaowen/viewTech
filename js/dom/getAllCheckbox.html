@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取页面上所有的复选框</title>
+</head>
+<body>
+
+<input type="checkbox" value="1" >1
+<input type="checkbox" value="2">2
+
+
+
+<input type="text">
+<input type="button" value="点击" id="btnTest">
+<input type="checkbox" value="3">3
+
+
+<script>
+    document.getElementById('btnTest').onclick = function () {
+      var inputCollection = document.getElementsByTagName('input');
+      for(var i=0;i<inputCollection.length;i++){
+          if(inputCollection[i].type ==='checkbox')
+            console.log(inputCollection[i].type);
+      }
+    };
+</script>
+</body>
+</html>

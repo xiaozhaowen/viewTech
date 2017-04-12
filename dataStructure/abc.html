@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    getSortResult();
+    function getSortResult() {
+        var baseArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', "H"],
+            subArr = [7, 5, 3, 2, 6, 1, 4, 9];
+
+        var len = baseArr.length;
+        var temp = [];
+        for (var i = 0; i < len; i++) {
+            var ele = i + subArr[i];
+            temp.push({
+                num: ele,
+                str: baseArr[i]
+            });
+        }
+
+        bubbleSort(temp);
+        temp.forEach(function (item) {
+            console.log(item.str);
+        });
+
+    }
+
+
+    function bubbleSort(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            for (var j = arr.length - 1; j > i; j--) {
+                var after = arr[j], pre = arr[j - 1];
+                if (after.num < pre.num) {
+                    swap(arr, j, j - 1);
+                }
+            }
+        }
+    }
+
+    function swap(arr, i, j) {
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+
+    //    getDateStepResult()
+    function getDateStepResult() {
+        var inputString = '20170101 00:00:10,2017,3,1,0,0,30';
+
+        var stringArray = inputString.split(',');
+        if (stringArray.length <= 1) {
+            throw  new Error('输入的格式不满足需求');
+        }
+        var yearDif = 0, monthDif = 0, dayDif = 0, hourDif = 0, minDif = 0, secDif = 0;
+
+
+        for (var i = 0; i < stringArray.length; i++) {
+            var time = stringArray[i],
+                timeNext = stringArray[i + 1];
+            var year = parseInt(time.substr(0, 4)),
+                month = parseInt(time.substr(5, 2)),
+                day = parseInt(time.substr(6, 2)),
+                hour = parseInt(time.substr(10, 2)),
+                min = parseInt(time.substr(13, 2)),
+                sec = parseInt(time.substr(15, 2));
+
+            var yearNext = parseInt(timeNext.substr(0, 4)),
+                monthNext = parseInt(timeNext.substr(5, 2)),
+                dayNext = parseInt(timeNext.substr(6, 2)),
+                hourNext = parseInt(timeNext.substr(10, 2)),
+                minNext = parseInt(timeNext.substr(13, 2)),
+                secNext = parseInt(timeNext.substr(15, 2));
+
+            var date = new Date(year, month, day, hour, min, sec) - new Date(yearNext, monthNext, dayNext, hourNext, minNext, secNext);
+            var days = Math.floor(date / (24 * 3600 * 1000));
+            var leave1 = date % (24 * 3600 * 1000)
+            var hours = Math.floor(leave1 / (3600 * 1000))
+
+            var leave2 = leave1 % (3600 * 1000)
+            var minutes = Math.floor(leave2 / (60 * 1000))
+
+
+            var leave3 = leave2 % (60 * 1000)
+            var seconds = Math.round(leave3 / 1000)
+
+
+        }
+
+
+    }
+
+
+    judgeType();
+    function judgeType() {
+        var str = '-100.1,abcd,1.0023e13,true,ttt,20,20170101,False,100%,20170103  04:00:00';
+
+        var result = '';
+        var array = str.split(',');
+
+        array.forEach(function (item) {
+            if (judgeBoolean(item)) {
+                result += 'Boolean,';
+            } else if (judgeNumber(item)) {
+                result += 'Number,';
+            } else if (judgeDate(item)) {
+                result += 'Date,';
+            } else {
+                result += 'String,';
+            }
+        });
+
+        console.log(result);
+        console.log(isPercentage('100%'));
+
+
+        function judgeBoolean(str) {
+            if (str.toLowerCase() === 'true' || str.toLowerCase() === 'false')
+                return true;
+            return false;
+        }
+
+        function isPercentage(str) {
+            var regu = /(100|([1-9]?[0-9]?))%$/;
+            return regu.test(str);
+        }
+
+        function isInteger(str) {
+            var regu = /^[-]{0,1}[0-9]{1,}$/;
+            return regu.test(str);
+        };
+
+        function judgeNumber(str) {
+            if (isInteger(str)) {
+                return true;
+            }
+            if (isPercentage(str)) {
+                return true;
+            }
+            var re = /^[-]{0,1}(\d+)[\.]+(\d+)$/;
+            if (re.test(str)) {
+                if (RegExp.$1 == 0 && RegExp.$2 == 0) {
+                    return false;
+                }
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        function isNumber(s) {
+            var regu = "^[0-9]+$";
+            var re = new RegExp(regu);
+            if (s.search(re) != -1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
+
+        function judgeDate(date, fmt) {
+            if (fmt == null) {
+                fmt = "yyyyMMdd";
+            }
+            var yIndex = fmt.indexOf("yyyy");
+            if (yIndex == -1) {
+                return false;
+            }
+            var year = date.substring(yIndex, yIndex + 4);
+            var mIndex = fmt.indexOf("MM");
+            if (mIndex == -1) {
+                return false;
+            }
+            var month = date.substring(mIndex, mIndex + 2);
+            var dIndex = fmt.indexOf("dd");
+            if (dIndex == -1) {
+                return false;
+            }
+            var day = date.substring(dIndex, dIndex + 2);
+            if (!isNumber(year) || year > "2100" || year < "1900") {
+                return false;
+            }
+            if (!isNumber(month) || month > "12" || month < "01") {
+                return false;
+            }
+            if (day > getMaxDay(year, month) || day < "01") {
+                return false;
+            }
+            return true;
+        };
+        function getMaxDay(year, month) {
+            if (month == 4 || month == 6 || month == 9 || month == 11) {
+                return "30";
+            }
+            if (month == 2) {
+                if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+                    return "29";
+                }
+                else {
+                    return "28";
+                }
+                return "31";
+                ;
+            }
+        };
+    }
+
+
+</script>
+</body>
+</html>

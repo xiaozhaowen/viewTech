@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    getSortArray();
+    function getSortArray() {
+        var arr1 = ['A'],
+            arr2 = ['C'],
+            arr3 = ['BD', 'DB'],
+            arr4 = ['EF', 'FE'];
+
+        var result =[];
+
+        for (var i = 0; i < arr1.length; i++) {
+            for (var j = 0; j < arr2.length; j++) {
+                for (var k = 0; k < arr3.length; k++) {
+                    for (var m = 0; m < arr4.length; m++) {
+                        result.push(arr1[i]+arr2[j]+arr3[k]+arr4[m]);
+                    }
+                }
+            }
+        }
+        var resultStr='';
+        for(var i=0;i<result.length;i++){
+            if(i!=result.length-1){
+                resultStr +=result[i] +',';
+            }else
+                resultStr +=result[i];
+        }
+        console.log(resultStr);
+    }
+
+
+
+    phoneKeyboard();
+    function  phoneKeyboard() {
+        var letter4_arr ='ghi'.split('');
+        var letter5_arr ='jkl'.split('');
+        var temp=[],result ='';
+        for(var i=0,len=letter4_arr.length;i<len;i++){
+            for(var j=0;j<letter5_arr.length;j++){
+                result +=letter4_arr[i]+letter5_arr[j]+',';
+            }
+        }
+        if(result)
+            result=result.substr(0,result.length-1);
+        console.log(result);
+
+    }
+
+
+
+    var tree ={
+        name:'A',
+        children:[
+            {
+                name:'B',
+                children:[
+                    {
+                        name:'E'
+                    }
+                ]
+            },
+            {
+                name:'C',
+                children:[
+                    {
+                        name:'F'
+                    },
+                    {
+                        name:'G'
+                    },
+                    {
+                        name:'H'
+                    }
+                ]
+            },
+            {
+                name:'D',
+                children:[
+                    {
+                        name:'I'
+                    }
+                ]
+            }
+        ]
+    };
+
+    function searchNode(nodeName) {
+        var temp =[];
+        find(tree,nodeName);
+        function find(node,name) {
+            temp.push(node);
+            if(node.name ===name){
+                return;
+            }
+            if(node.children){
+                for(var i=0;i<node.children.length;i++){
+                    find(node.children[i],name);
+                }
+            }
+
+        }
+        temp.forEach(function (item) {
+            console.log(item.name);
+        })
+
+    }
+
+    searchNode('C');
+</script>
+</body>
+</html>

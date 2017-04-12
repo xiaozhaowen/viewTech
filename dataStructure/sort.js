@@ -45,6 +45,24 @@ simpleSelectSort();
 //----------------------------冒泡------------------------------------------
 
 
+function  getSortResult() {
+    var baseArr =['A','B','C','D','E','F','G',"H"],
+        subArr =[7,5,3,2,6,1,4,9];
+
+    var len =baseArr.length;
+    var temp=[];
+    for(var i=0;i<len;i++){
+        var ele = i + subArr[i];
+        temp.push({
+            num:ele,
+            str:baseArr[i]
+        });
+    }
+
+    bubbleSort(temp);
+}
+
+
 function bubbleSort(arr) {
     for (var i = 0; i < arr.length; i++) {
         for (var j = arr.length - 1; j > i; j--) {

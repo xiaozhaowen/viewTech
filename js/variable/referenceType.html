@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>引用类型</title>
+</head>
+<body>
+    <script>
+        var arr=[1,2,3];
+        
+        function foo(myArr) {
+            var b = myArr;
+            myArr.push(4);
+            console.log(myArr);
+            console.log(b);
+        }
+        foo(arr);
+    </script>
+</body>
+</html>
